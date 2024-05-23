@@ -6,3 +6,6 @@ CentOS_box apache_package=httpd php_package=php
 
 [file_servers]
 172.16.250.134
+
+[workstations]
+172.16.250.135
