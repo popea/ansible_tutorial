@@ -39,7 +39,7 @@
     when: ansible_distribution == "CentOS"
 
 
-- hosts: web_servers
+- hosts: db_servers
   become: true
   tasks:
 
@@ -58,7 +58,7 @@
     when: ansible_distribution == "Ubuntu"
   
 
-- hosts: web_servers
+- hosts: file_servers
   become: true
   tasks:
 
