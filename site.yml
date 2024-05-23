@@ -69,6 +69,14 @@
       regeexp: '^ServerAdmin'
       line: ServerAdmin admin@gmail.com
     when: ansible_distribution == "CentOS"
+    register: httpd_status
+  
+  - name: restart httpd (centos)
+    tags: apache,centos,httpd
+    service:
+      name: httpd
+      state: restarted
+    when: httpd_status.changed
 
   - name: copy default html file to site
     tags: apache,apache2
