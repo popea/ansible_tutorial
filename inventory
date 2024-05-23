@@ -1,1 +1,8 @@
-localhost
+[web_servers]
+localhost apache_package=apache2 php_package=libapache2-mod-php
+
+[db_servers]
+CentOS_box apache_package=httpd php_package=php
+
+[file_servers]
+172.16.250.134
