@@ -62,6 +62,14 @@
       enabled: yes
     when: ansible_distribution == "CentOS"
   
+  - name: change email adress in cfg file
+    tags: apache,centos,httpd
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf 
+      regeexp: '^ServerAdmin'
+      line: ServerAdmin admin@gmail.com
+    when: ansible_distribution == "CentOS"
+
   - name: copy default html file to site
     tags: apache,apache2
     copy:
