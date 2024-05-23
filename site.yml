@@ -53,6 +53,13 @@
         - php
       state: latest
     when: ansible_distribution == "CentOS"
+
+  - name: start httpd (centos)
+    tags: apache,centos,httpd
+    service:
+      name: httpd
+      state: started
+    when: ansible_distribution == "CentOS"
   
   - name: copy default html file to site
     tags: apache,apache2
