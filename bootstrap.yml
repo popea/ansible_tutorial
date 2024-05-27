@@ -1,0 +1,38 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: install updates (CentOS)
+    tags: always
+    dnf:
+      update_only: yes
+      update_cache: yes
+    changed_when: false
+    when: ansible_distribution == "CentOS"
+
+
+- hosts: all
+  become: true
+  tasks:
+  - name: create automaton user
+    tags: always
+    user: 
+      name: automaton
+      groups: root 
+
+  - name: add ssh key for automaton user
+    tags: always
+    authorized_key: 
+      user: automaton
+      key: "ssh-ed25519 ..."
+
+  - name: add sudoers file for automaton
+    tags: always
+    copy:
+      src: sudoer_automaton
+      dest: /etc/sudoers.d/automaton
+      owner: root
+      group: root
+      mode: 0440

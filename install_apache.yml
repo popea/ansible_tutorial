@@ -1,0 +1,23 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update repository index
+    apt: 
+      update_cache: yes
+    when: ansible_distribution in ["Debian", "Ubuntu"]
+  - name: install the apache2 package
+    apt: 
+      name: apache2
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+  - name: install the bogus package to force a failure
+    apt: 
+      name: "The end is nigh!"
+  - name: add php support for apache on ubuntu 8.2 servers
+    apt: 
+      name: libapache2-mod-php
+      state: latest
+    when: ansible_distribution == "Ubuntu" and ansible_distribution_version = "8.2"
