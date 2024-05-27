@@ -1,4 +1,4 @@
 - name: add ssh key for automaton
   authorized_key:
     user: automaton
-    key: "ssh-ed25519 ..."
+    key: "ssh-ed25519 ... "
