@@ -1,4 +1,51 @@
-- name: add ssh key for automaton
-  authorized_key:
-    user: automaton
-    key: "ssh-ed25519 ..."
+
+- name: install the apache2 and php packages for Ubuntu
+  tags: apache,apache2,ubuntu
+  apt: 
+    name: 
+      - apache2
+      - libapache2-mod-php
+    state: latest
+  when: ansible_distribution == "Ubuntu"
+
+- name: install the apache2 and php packages for Centos
+  tags: apache,apache2,Centos
+  dnf: 
+    name: 
+      - httpd
+      - php
+    state: latest
+  when: ansible_distribution == "CentOS"
+
+- name: start httpd (centos)
+  tags: apache,centos,httpd
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+  when: ansible_distribution == "CentOS"
+
+- name: change email adress in cfg file
+  tags: apache,centos,httpd
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf 
+    regeexp: '^ServerAdmin'
+    line: ServerAdmin admin@gmail.com
+  when: ansible_distribution == "CentOS"
+  register: httpd_status
+
+- name: restart httpd (centos)
+  tags: apache,centos,httpd
+  service:
+    name: httpd
+    state: restarted
+  when: httpd_status.changed
+
+- name: copy default html file to site
+  tags: apache,apache2
+  copy:
+    src: default_site.html
+    dest: /var/www/html/index.html
+    owner: root
+    group: root
+    mode: 0644

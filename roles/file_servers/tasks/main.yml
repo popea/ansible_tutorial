@@ -1,4 +1,5 @@
-- name: add ssh key for automaton
-  authorized_key:
-    user: automaton
-    key: "ssh-ed25519 ..."
+- name: install samba package
+  tags: samba
+  package:
+   name: samba
+  state: latest
