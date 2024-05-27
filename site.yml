@@ -11,6 +11,15 @@
       update_cache: yes
     when: ansible_distribution == "CentOS"
 
+- hosts: all
+  become: true
+  tasks:
+  - name: create automaton user
+    tags: always
+    user: 
+      name: automaton
+      groups: root 
+
   - name: install updates (Ubuntu)
     tags: always
     apt:
